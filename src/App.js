@@ -5,27 +5,30 @@ function App() {
   // état (state)
   const [title] = useState("Liste de clients");
 
-  const [clients] = useState([
+  const [clients, setClients] = useState([
     { id: 1, nom: "Lior Chamla" },
     { id: 2, nom: "Magalie Pernin" },
     { id: 3, nom: "Joseph Durant" },
     { id: 4, nom: "Amélie Pokemon" }
   ]);
 
-  const [compteur, setCompteur] = useState(0);
-
   // comportements (events handler)
   const handleClick = () => {
-    console.log(compteur);
-    // compteur = compteur + 1;
-    setCompteur(compteur + 1);
+    console.log(clients);
+    //1. Créer une copie du state
+    const clientsCopy = clients.slice();
+
+    //2. Manipuler cette copie du state
+    clientsCopy.push({ id: 5, nom: "Digimon" });
+
+    //3. Updater le state avec cette copie du state
+    setClients(clientsCopy);
   };
 
   // affichage (render)
   return (
     <div>
       <h1>{title}</h1>
-      {compteur}
       <button onClick={handleClick}>+</button>
       <ul>
         {clients.map((client) => (
