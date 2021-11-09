@@ -12,19 +12,24 @@ function App() {
     { id: 4, nom: "Amélie Pokemon" }
   ]);
 
-  // comportements (behaviour)
+  const [compteur, setCompteur] = useState(0);
+
+  // comportements (events handler)
   const handleClick = () => {
-    alert("Bonjour");
+    console.log(compteur);
+    // compteur = compteur + 1;
+    setCompteur(compteur + 1);
   };
 
   // affichage (render)
   return (
     <div>
       <h1>{title}</h1>
-      <button onClick={handleClick}>X</button>
+      {compteur}
+      <button onClick={handleClick}>+</button>
       <ul>
         {clients.map((client) => (
-          <li>
+          <li key={client.id}>
             {client.nom} <button>X</button>{" "}
           </li>
         ))}
@@ -48,4 +53,5 @@ export default App;
  *  • refacto "liste de client" (const + map)
  * 4) ajouter le state
  * 5) ajouter des comportements (events handler)
+ * 6) faire intéragir les trois ensemble
  */
