@@ -3,13 +3,14 @@ import "./styles.css";
 
 function App() {
   // état (state)
-  const clients = [
+  const [title] = useState("Liste de clients");
+
+  const [clients] = useState([
     { id: 1, nom: "Lior Chamla" },
     { id: 2, nom: "Magalie Pernin" },
-    { id: 3, nom: "Jospeh Durant" }
-  ];
-
-  const title = "Liste de clients";
+    { id: 3, nom: "Joseph Durant" },
+    { id: 4, nom: "Amélie Pokemon" }
+  ]);
 
   // comportements (behaviour)
 
@@ -41,4 +42,5 @@ export default App;
  * 3) refacto affichage
  *  • refacto "title" (interpolation JSX)
  *  • refacto "liste de client" (const + map)
+ * 4) ajouter le state
  */
