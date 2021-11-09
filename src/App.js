@@ -13,27 +13,26 @@ function App() {
   ]);
 
   // comportements (events handler)
-  const handleClick = () => {
-    console.log(clients);
+  const handleDelete = (id) => {
+    console.log(id);
     //1. Créer une copie du state
     const clientsCopy = clients.slice();
 
     //2. Manipuler cette copie du state
-    clientsCopy.push({ id: 5, nom: "Digimon" });
+    const clientsCopyFiltered = clientsCopy.filter((client) => client.id !== id);
 
     //3. Updater le state avec cette copie du state
-    setClients(clientsCopy);
+    setClients(clientsCopyFiltered);
   };
 
   // affichage (render)
   return (
     <div>
       <h1>{title}</h1>
-      <button onClick={handleClick}>+</button>
       <ul>
         {clients.map((client) => (
           <li key={client.id}>
-            {client.nom} <button>X</button>{" "}
+            {client.nom} <button onClick={() => handleDelete(client.id)}>X</button>{" "}
           </li>
         ))}
       </ul>
@@ -57,4 +56,5 @@ export default App;
  * 4) ajouter le state
  * 5) ajouter des comportements (events handler)
  * 6) faire intéragir les trois ensemble
+ * 7) supprimer un client de la liste
  */
