@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./styles.css";
 
 function App() {
@@ -35,6 +34,5 @@ export default App;
  * Chapitres
  * 1) mon premier composant
  * 2) ajouter affichage
- * 3) ajouter état / state
- * 4) ajouter comportement
+ * 3) ajouter state
  */
