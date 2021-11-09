@@ -13,11 +13,15 @@ function App() {
   ]);
 
   // comportements (behaviour)
+  const handleClick = () => {
+    alert("Bonjour");
+  };
 
   // affichage (render)
   return (
     <div>
       <h1>{title}</h1>
+      <button onClick={handleClick}>X</button>
       <ul>
         {clients.map((client) => (
           <li>
@@ -43,4 +47,5 @@ export default App;
  *  • refacto "title" (interpolation JSX)
  *  • refacto "liste de client" (const + map)
  * 4) ajouter le state
+ * 5) ajouter des comportements (events handler)
  */
