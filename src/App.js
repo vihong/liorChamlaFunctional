@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./styles.css";
 
 function App() {
@@ -12,17 +12,30 @@ function App() {
     { id: 4, nom: "Amélie Pokemon" }
   ]);
 
+  const [nouveauClient, seNouveauClient] = useState("");
+
   // comportements (events handler)
   const handleDelete = (id) => {
-    console.log(id);
-    //1. Créer une copie du state
     const clientsCopy = clients.slice();
-
-    //2. Manipuler cette copie du state
     const clientsCopyFiltered = clientsCopy.filter((client) => client.id !== id);
-
-    //3. Updater le state avec cette copie du state
     setClients(clientsCopyFiltered);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const clientsCopy = [...clients];
+
+    const id = new Date().getTime();
+    const nom = nouveauClient;
+    const client = { id, nom };
+    clientsCopy.push(client);
+
+    setClients(clientsCopy);
+    seNouveauClient("");
+  };
+
+  const handleChange = (event) => {
+    seNouveauClient(event.target.value);
   };
 
   // affichage (render)
@@ -36,8 +49,8 @@ function App() {
           </li>
         ))}
       </ul>
-      <form action="submit">
-        <input type="text" placeholder="Ajouter un client" />
+      <form action="submit" onSubmit={handleSubmit}>
+        <input value={nouveauClient} type="text" placeholder="Ajouter un client" onChange={handleChange} />
         <button>+</button>
       </form>
     </div>
@@ -57,4 +70,6 @@ export default App;
  * 5) ajouter des comportements (events handler)
  * 6) faire intéragir les trois ensemble
  * 7) supprimer un client de la liste
+ * 8) ajouter un client à la liste (gestion des formulaires react)
+ * 9) refactor syntaxique de App
  */
