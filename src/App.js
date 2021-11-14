@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Client from "./Client";
+import Form from "./Form";
 import "./styles.css";
 
 function App() {
@@ -13,8 +14,6 @@ function App() {
     { id: 4, nom: "Amélie Pokemon" }
   ]);
 
-  const [nouveauClient, seNouveauClient] = useState("");
-
   // comportements (events handler)
   const handleDelete = (id) => {
     const clientsCopy = clients.slice();
@@ -22,21 +21,10 @@ function App() {
     setClients(clientsCopyFiltered);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleAdd = (clientToAdd) => {
     const clientsCopy = [...clients];
-
-    const id = new Date().getTime();
-    const nom = nouveauClient;
-    const client = { id, nom };
-    clientsCopy.push(client);
-
+    clientsCopy.push(clientToAdd);
     setClients(clientsCopy);
-    seNouveauClient("");
-  };
-
-  const handleChange = (event) => {
-    seNouveauClient(event.target.value);
   };
 
   // affichage (render)
@@ -48,11 +36,7 @@ function App() {
           <Client infoClient={client} onDelete={() => handleDelete(client.id)} />
         ))}
       </ul>
-
-      <form action="submit" onSubmit={handleSubmit}>
-        <input value={nouveauClient} type="text" placeholder="Ajouter un client" onChange={handleChange} />
-        <button>+</button>
-      </form>
+      <Form handleAdd={handleAdd} />
     </div>
   );
 }
@@ -73,5 +57,6 @@ export default App;
  * 8) ajouter un client à la liste (gestion des formulaires react)
  * 9) refactor syntaxique de App
  * 10) refactor structurel de App (props)
- * 11 ) notion de black box (props)
+ * 11 ) notion de black box (raise the event)
+ * 12 ) refactor Form
  */
