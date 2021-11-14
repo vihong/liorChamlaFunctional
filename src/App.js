@@ -45,7 +45,7 @@ function App() {
       <h1>{title}</h1>
       <ul>
         {clients.map((client) => (
-          <Client infoClient={client} onDelete={handleDelete} />
+          <Client infoClient={client} onDelete={() => handleDelete(client.id)} />
         ))}
       </ul>
 
@@ -73,4 +73,5 @@ export default App;
  * 8) ajouter un client à la liste (gestion des formulaires react)
  * 9) refactor syntaxique de App
  * 10) refactor structurel de App (props)
+ * 11 ) notion de black box (props)
  */
