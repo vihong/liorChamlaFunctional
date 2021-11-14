@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
+import Client from "./Client";
 import "./styles.css";
 
 function App() {
@@ -44,11 +45,10 @@ function App() {
       <h1>{title}</h1>
       <ul>
         {clients.map((client) => (
-          <li key={client.id}>
-            {client.nom} <button onClick={() => handleDelete(client.id)}>X</button>{" "}
-          </li>
+          <Client infoClient={client} onDelete={handleDelete} />
         ))}
       </ul>
+
       <form action="submit" onSubmit={handleSubmit}>
         <input value={nouveauClient} type="text" placeholder="Ajouter un client" onChange={handleChange} />
         <button>+</button>
@@ -72,4 +72,5 @@ export default App;
  * 7) supprimer un client de la liste
  * 8) ajouter un client à la liste (gestion des formulaires react)
  * 9) refactor syntaxique de App
+ * 10) refactor structurel de App (props)
  */
