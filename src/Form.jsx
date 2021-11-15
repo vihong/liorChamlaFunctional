@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Form({ handleAdd, valueInputBox }) {
+export default function Form({ handleAdd, valueInputBox, addBoxRef }) {
   const [nouveauClient, setNouveauClient] = useState(valueInputBox ? valueInputBox : "");
 
   const handleSubmit = (event) => {
@@ -20,7 +20,7 @@ export default function Form({ handleAdd, valueInputBox }) {
 
   return (
     <form action="submit" onSubmit={handleSubmit}>
-      <input value={nouveauClient} type="text" placeholder="Ajouter un client" onChange={handleChange} />
+      <input ref={addBoxRef} value={nouveauClient} type="text" placeholder="Ajouter un client" onChange={handleChange} />
       <button>+</button>
     </form>
   );

@@ -1,7 +1,5 @@
 import { useRef, useState } from "react";
 import Client from "./Client";
-import Form from "./Form";
-import "./styles.css";
 
 function App() {
   // état (state)
@@ -28,9 +26,13 @@ function App() {
   };
 
   const handleAdd = (clientToAdd) => {
+    console.log(clientToAdd);
     const clientsCopy = [...clients];
-    clientsCopy.push(clientToAdd);
-    setClients(clientsCopy);
+    clientsCopy.splice(0, 0, clientToAdd);
+
+    setClients((clients) => {
+      return clientsCopy;
+    });
   };
 
   const handleClientSelected = async (idSelected) => {
@@ -53,17 +55,34 @@ function App() {
     handleUpdate(clientUpdated);
   };
 
+  const handleAddButton = async () => {
+    console.log("handleAddButton");
+
+    // création du nouveau client
+    const id = new Date().getTime();
+    const nom = "";
+    const newClient = { id, nom };
+
+    // envoie à handleAdd pour gestion du state
+    handleAdd(newClient);
+    console.log("pokemon 2");
+    await setIsEditing(true);
+    await setClientbeingEdited(newClient);
+    editBoxRef.current.focus();
+  };
+
   // affichage (render)
   return (
     <div>
       <h1>{title}</h1>
+      <button onClick={handleAddButton}>Add a client</button>
       <ul>
         {clients.map((client) => (
           <Client key={client.id} infoClient={client} onSelected={handleClientSelected} onDelete={() => handleDelete(client.id)} />
         ))}
       </ul>
-      <Form handleAdd={handleAdd} />
       {isEditing && <input ref={editBoxRef} value={clientBeingEdited.nom} placeholder={"Click on a client to edit"} onChange={handleInputChange} />}
+      {/* <Form handleAdd={handleAdd} addBoxRef={addBoxRef} /> */}
     </div>
   );
 }
@@ -87,5 +106,6 @@ export default App;
  * 11) notion de black box (raise the id)
  * 12) refactor Form
  * 13) Ajouter un input (séparé) modifiable en live
- * 14) Ajouter un input add client à sélectionner
+ * 14) Ajouter la box editing que si le client est sélectionné
+ * 15) Ajouter un client vierge afin d'ajouter client
  */
