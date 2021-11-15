@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-export default function Form({ handleAdd }) {
-  const [nouveauClient, setNouveauClient] = useState("");
+export default function Form({ handleAdd, valueInputBox }) {
+  const [nouveauClient, setNouveauClient] = useState(valueInputBox ? valueInputBox : "");
 
   const handleSubmit = (event) => {
     event.preventDefault();

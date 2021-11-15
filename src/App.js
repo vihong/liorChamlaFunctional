@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Client from "./Client";
 import Form from "./Form";
 import "./styles.css";
@@ -14,7 +14,11 @@ function App() {
     { id: 4, nom: "Amélie Pokemon" }
   ]);
 
-  const [clientInInputBox, setClientInInputBox] = useState({});
+  const [clientBeingEdited, setClientbeingEdited] = useState({});
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const editBoxRef = useRef();
 
   // comportements (events handler)
   const handleDelete = (id) => {
@@ -29,9 +33,11 @@ function App() {
     setClients(clientsCopy);
   };
 
-  const handleClientSelected = (idSelected) => {
+  const handleClientSelected = async (idSelected) => {
+    setIsEditing(true);
     const clientToEdit = clients.find((client) => client.id === idSelected);
-    setClientInInputBox(clientToEdit);
+    await setClientbeingEdited(clientToEdit);
+    editBoxRef.current.focus();
   };
 
   const handleUpdate = (clientUpdated) => {
@@ -42,8 +48,8 @@ function App() {
   };
 
   const handleInputChange = (event) => {
-    const clientUpdated = { id: clientInInputBox.id, nom: event.target.value };
-    setClientInInputBox(clientUpdated);
+    const clientUpdated = { id: clientBeingEdited.id, nom: event.target.value };
+    setClientbeingEdited(clientUpdated);
     handleUpdate(clientUpdated);
   };
 
@@ -57,7 +63,7 @@ function App() {
         ))}
       </ul>
       <Form handleAdd={handleAdd} />
-      <input value={clientInInputBox.nom} placeholder={"Click on a client to edit"} onChange={handleInputChange} />
+      {isEditing && <input ref={editBoxRef} value={clientBeingEdited.nom} placeholder={"Click on a client to edit"} onChange={handleInputChange} />}
     </div>
   );
 }
@@ -81,4 +87,5 @@ export default App;
  * 11) notion de black box (raise the id)
  * 12) refactor Form
  * 13) Ajouter un input (séparé) modifiable en live
+ * 14) Ajouter un input add client à sélectionner
  */
