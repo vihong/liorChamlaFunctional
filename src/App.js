@@ -14,6 +14,8 @@ function App() {
     { id: 4, nom: "Amélie Pokemon" }
   ]);
 
+  const [clientInInputBox, setClientInInputBox] = useState({});
+
   // comportements (events handler)
   const handleDelete = (id) => {
     const clientsCopy = clients.slice();
@@ -27,16 +29,35 @@ function App() {
     setClients(clientsCopy);
   };
 
+  const handleClientSelected = (idSelected) => {
+    const clientToEdit = clients.find((client) => client.id === idSelected);
+    setClientInInputBox(clientToEdit);
+  };
+
+  const handleUpdate = (clientUpdated) => {
+    const clientsCopy = [...clients];
+    const indexOfClientToUpdate = clientsCopy.findIndex((client) => client.id === clientUpdated.id);
+    clientsCopy[indexOfClientToUpdate] = clientUpdated;
+    setClients(clientsCopy);
+  };
+
+  const handleInputChange = (event) => {
+    const clientUpdated = { id: clientInInputBox.id, nom: event.target.value };
+    setClientInInputBox(clientUpdated);
+    handleUpdate(clientUpdated);
+  };
+
   // affichage (render)
   return (
     <div>
       <h1>{title}</h1>
       <ul>
         {clients.map((client) => (
-          <Client infoClient={client} onDelete={() => handleDelete(client.id)} />
+          <Client key={client.id} infoClient={client} onSelected={handleClientSelected} onDelete={() => handleDelete(client.id)} />
         ))}
       </ul>
       <Form handleAdd={handleAdd} />
+      <input value={clientInInputBox.nom} placeholder={"Click on a client to edit"} onChange={handleInputChange} />
     </div>
   );
 }
@@ -51,12 +72,13 @@ export default App;
  *  • refacto "title" (interpolation JSX)
  *  • refacto "liste de client" (const + map)
  * 4) ajouter le state
- * 5) ajouter des comportements (events handler)
+ * 5) ajouter des comportements (ids handler)
  * 6) faire intéragir les trois ensemble
  * 7) supprimer un client de la liste
  * 8) ajouter un client à la liste (gestion des formulaires react)
  * 9) refactor syntaxique de App
  * 10) refactor structurel de App (props)
- * 11 ) notion de black box (raise the event)
- * 12 ) refactor Form
+ * 11) notion de black box (raise the id)
+ * 12) refactor Form
+ * 13) Ajouter un input (séparé) modifiable en live
  */
