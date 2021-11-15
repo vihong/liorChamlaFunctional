@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Client({ infoClient, onSelected, onDelete }) {
+export default function Client({ infoClient, onSelected, onDelete, isModeAdmin }) {
   const itemStyle =
     infoClient.id === 0
       ? {
@@ -17,7 +17,7 @@ export default function Client({ infoClient, onSelected, onDelete }) {
 
   return (
     <li key={infoClient.id} onClick={() => onSelected(infoClient.id)} style={itemStyle}>
-      {infoClient.nom} <button onClick={onDelete}>X</button>
+      {infoClient.nom} {isModeAdmin && <button onClick={onDelete}>X</button>}
     </li>
   );
 }

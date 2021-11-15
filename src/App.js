@@ -18,6 +18,13 @@ function App() {
 
   const editBoxRef = useRef();
 
+  const [isModeAdmin, setIsModeAdmin] = useState(false);
+
+  const styleButton = {
+    background: isModeAdmin && "green",
+    color: isModeAdmin ? "white" : "black"
+  };
+
   // comportements (events handler)
   const handleDelete = (id) => {
     const clientsCopy = clients.slice();
@@ -36,6 +43,7 @@ function App() {
   };
 
   const handleClientSelected = async (idSelected) => {
+    if (!isModeAdmin) return;
     setIsEditing(true);
     const clientToEdit = clients.find((client) => client.id === idSelected);
     await setClientbeingEdited(clientToEdit);
@@ -56,8 +64,6 @@ function App() {
   };
 
   const handleAddButton = async () => {
-    console.log("handleAddButton");
-
     // création du nouveau client
     const id = new Date().getTime();
     const nom = "";
@@ -71,17 +77,24 @@ function App() {
     editBoxRef.current.focus();
   };
 
+  const toggleAdminButton = () => {
+    setIsModeAdmin(!isModeAdmin);
+  };
+
   // affichage (render)
   return (
     <div>
+      <button style={styleButton} onClick={toggleAdminButton}>
+        {isModeAdmin ? "Quitter le mode Admin" : "Passer en mode Admin"}
+      </button>
       <h1>{title}</h1>
-      <button onClick={handleAddButton}>Add a client</button>
+      {isModeAdmin && <button onClick={handleAddButton}>Add a client</button>}
       <ul>
         {clients.map((client) => (
-          <Client key={client.id} infoClient={client} onSelected={handleClientSelected} onDelete={() => handleDelete(client.id)} />
+          <Client key={client.id} infoClient={client} onSelected={handleClientSelected} onDelete={() => handleDelete(client.id)} isModeAdmin={isModeAdmin} />
         ))}
       </ul>
-      {isEditing && <input ref={editBoxRef} value={clientBeingEdited.nom} placeholder={"Click on a client to edit"} onChange={handleInputChange} />}
+      {isModeAdmin && <input ref={editBoxRef} value={clientBeingEdited.nom} placeholder={"Click on a client to edit"} onChange={handleInputChange} />}
       {/* <Form handleAdd={handleAdd} addBoxRef={addBoxRef} /> */}
     </div>
   );
@@ -108,4 +121,5 @@ export default App;
  * 13) Ajouter un input (séparé) modifiable en live
  * 14) Ajouter la box editing que si le client est sélectionné
  * 15) Ajouter un client vierge afin d'ajouter client
+ * 16) Refacto + embellishment UX
  */
